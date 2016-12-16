@@ -12,7 +12,7 @@ db = SQLAlchemy(app)
 class l4l_games(db.Model):
     __tablename__ = "l4l_games"
     #id = db.Column(db.Integer, primary_key=True)
-    gameid = db.Column(db.uuid, primary_key=True, default=uuid.uuid4)
+    gameid = db.Column(db.String(120), primary_key=True, default=uuid.uuid4)
     name = db.Column(db.String(120), unique=True)
     wordgamestate = db.Column(db.String(120), unique=False)
     score = db.Column(db.Integer, unique=False)
