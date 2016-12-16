@@ -10,9 +10,10 @@
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/bootstrap.css">
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+        <link rel="stylesheet" href= "{{ url_for('static',filename='css/normalize.css') }}">
+        <link rel="stylesheet" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
+        <script src= "{{ url_for('static',filename='js/vendor/modernizr-2.8.3.min.js') }}"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -60,7 +61,7 @@
             <br>
             <input id="reset" type="button" value="Reset" class="btn btn-warning">
         </div>
-        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src= "https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
             //set vars 
             var lastword = new Array()
@@ -207,8 +208,8 @@
             })
 
         </script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <script src="{{ url_for('static',filename='js/plugins.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/main.js') }}"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
