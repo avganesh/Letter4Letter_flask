@@ -25,7 +25,7 @@ def index():
     return render_template('index.html')
 
 # Save e-mail to database and send to success page
-@app.route('/prereg', methods=['POST'])
+@app.route('/', methods=['POST'])
 def prereg():
     email = None
     if request.method == 'POST':
