@@ -22,9 +22,9 @@
         <!-- Add your site or application content here -->
         
         <h1>Letter 4 Letter Web App</h1>
-        <div class="">
+        <div class="container-fluid">
             <p id="Instructions"> 
-            Here's how you play the game: 
+            <h4>Here's how you play the game: </h4>
             <br> First a player enters a letter
             <br> Click Right or Left to submit 
             <br> Then the next player enters a letter 
@@ -35,31 +35,31 @@
             The player that enters a letter, which spells a word with 4 letters or more <strong> loses </strong> 
 
             </p>
-        <div>
-
-        Round: <span id="Round"></span>
-        <p id="Message">Enter a letter to start playing</p>
-        <input id="leftbutton" type="button" value="Left">
-        <input id="theletter" type="text">
-        <input id="rightbutton" type="button" value="Right">
-        <br>
-        <br> Current Turn: <span id="theword"></span>
-        <br> Previous Turns: 
-        <br><span id="lastword"></span>
-        <br> 
-        <p id="wordlist"> </p>
-        <br>
-        <input id="challenge" type="hidden" value="Challenge"> <input id="challengetext" type="hidden">
-        <br> Player 1 score: <span id="P1_score"></span>
-        <br> Player 2 score: <span id="P2_score"></span>
-        <br>
-        <input id="reset" type="button" value="Reset">
-
-        <form class="col-lg-12" action="{{url_for('prereg')}}" method="POST">
-            <input title="Don't worry. We hate spam, and will not share your email with anyone." placeholder="Enter your email address" type="email" name="email">
-            <span><button class="btn btn-lg btn-primary" type="submit">GO</button></span>
-        </form>
-
+        </div>
+        <div class="container-fluid">
+            Round: <span id="Round"></span>
+            <p id="Message">Enter a letter to start playing</p>
+            <form class="form-inline">
+                <input id="leftbutton" type="button" value="Left" class="btn btn-primary">
+                <input id="theletter" type="text" class="form-control">
+                <input id="rightbutton" type="button" value="Right" class="btn btn-primary">
+            </form>
+            <br>
+            <br> Current Turn: <span id="theword"></span>
+            <br> Previous Turns: 
+            <br><span id="lastword"></span>
+            <br> 
+            <p id="wordlist"> </p>
+            <br>
+            <form class="form-inline">
+                <input id="challenge" type="hidden" value="Challenge" class="btn btn-danger"> 
+                <input id="challengetext" type="hidden" class="form-control">
+            </form>
+            <br> Player 1 score: <span id="P1_score"></span>
+            <br> Player 2 score: <span id="P2_score"></span>
+            <br>
+            <input id="reset" type="button" value="Reset" class="btn btn-warning">
+        </div>
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
             //set vars 
