@@ -31,20 +31,24 @@
             <br>
             </p>
         </div>
+        <br>
         <div class="container-fluid">
             <form class="col-lg-12" method="POST">
                 <input placeholder="Enter your name" action="{{url_for('prereg')}}" type="name" name="name">
                 <span><button class="btn btn-lg btn-success" type="submit">GO</button></span>
             </form>
         </div>
+        <br>
         <div class="container-fluid">
             <form class="col-lg-12" action="{{url_for('playoffline')}}" method="GET">
                 <button class="btn btn-lg btn-primary" type="submit">Play Offline</button>
             </form>
+            <br>
             <form class="col-lg-12" action="{{url_for('playonline')}}" method="GET">
                 <button class="btn btn-lg btn-primary" type="submit" disabled="disabled">Play Online</button>
             </form>
         </div>
+        <br>
         <script src= "https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script src="{{ url_for('static',filename='js/plugins.js') }}"></script>
         <script src="{{ url_for('static',filename='js/main.js') }}"></script>
