@@ -33,7 +33,7 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 # Save e-mail to database and send to success page
-@app.route('/prereg', methods=['POST'])
+@app.route('/', methods=['POST'])
 def prereg():
     name = None
     if request.method == 'POST':
@@ -48,6 +48,7 @@ def prereg():
 
 @app.route('/playoffline', methods=['GET'])
 def playoffline():
+    return render_template('playoffline.html')
     wordgamestate = None
     if request.method == 'GET':
         wordgamestate = ""
@@ -57,7 +58,7 @@ def playoffline():
             db.session.add(reg)
             db.session.commit()
             return render_template('playoffline.html')
-    return render_template('playoffline.html')
+    #return render_template('playoffline.html')
 
 @app.route('/playonline', methods=['GET'])
 def playonline():
