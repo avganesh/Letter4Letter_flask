@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.heroku import Heroku
+from flask_sqlalchemy import SQLAlchemy
+from flask_heroku import Heroku
 import uuid 
 
 app = Flask(__name__)
@@ -12,7 +12,7 @@ db = SQLAlchemy(app)
 class l4l_games(db.Model):
     __tablename__ = "l4l_games"
     #id = db.Column(db.Integer, primary_key=True)
-    gameid = db.Column(primary_key=True, default=uuid.uuid4, editable=False)
+    gameid = db.Column(primary_key=True, default=uuid.uuid4)
     name = db.Column(db.String(120), unique=True)
     wordgamestate = db.Column(db.String(120), unique=False)
     score = db.Column(db.Integer, unique=False)
