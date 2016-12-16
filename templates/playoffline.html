@@ -1,0 +1,230 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+
+        <link rel="stylesheet" href= "{{ url_for('static',filename='css/normalize.css') }}">
+        <link rel="stylesheet" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
+        <script src= "{{ url_for('static',filename='js/vendor/modernizr-2.8.3.min.js') }}"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        
+        <h1>Letter 4 Letter Web App</h1>
+        <div class="container-fluid">
+            <p id="Instructions"> 
+            <h4>Here's how you play the game: </h4>
+            <br> First a player enters a letter
+            <br> Click Right or Left to submit 
+            <br> Then the next player enters a letter 
+            <br> Click Right or Left to submit
+            <br> and so on...
+            <br> Use Challenge when you think your opponent is making up a word that doesn't exist. 
+            <br>
+            The player that enters a letter, which spells a word with 4 letters or more <strong> loses </strong> 
+
+            </p>
+        </div>
+        <div class="container-fluid">
+            Round: <span id="Round"></span>
+            <p id="Message">Enter a letter to start playing</p>
+            <form class="form-inline">
+                <input id="leftbutton" type="button" value="Left" class="btn btn-primary">
+                <input id="theletter" type="text" class="form-control">
+                <input id="rightbutton" type="button" value="Right" class="btn btn-primary">
+            </form>
+            <br>
+            <br> Current Turn: <span id="theword"></span>
+            <br> Previous Turns: 
+            <br><span id="lastword"></span>
+            <br> 
+            <p id="wordlist"> </p>
+            <br>
+            <form class="form-inline">
+                <input id="challenge" type="hidden" value="Challenge" class="btn btn-danger"> 
+                <input id="challengetext" type="hidden" class="form-control">
+            </form>
+            <br> Player 1 score: <span id="P1_score"></span>
+            <br> Player 2 score: <span id="P2_score"></span>
+            <br>
+            <input id="reset" type="button" value="Reset" class="btn btn-warning">
+        </div>
+        <!-- <div class="container-fluid">
+            <form class="col-lg-12" method="POST">
+                <input placeholder="Enter your name" action="{{url_for('prereg')}}" type="name" name="name">
+                <span><button class="btn btn-lg btn-success" type="submit">GO</button></span>
+            </form>
+        </div> -->
+        <script src= "https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
+            //set vars 
+            var lastword = new Array()
+            var theword = ""
+            var theletter = document.getElementById("theletter")           
+            var wordlist = new Object();
+            var round = 1;
+            var P1_score = 0;
+            var P2_score = 0
+            document.getElementById("P1_score").innerHTML = 0
+            document.getElementById("P2_score").innerHTML = 0
+
+            //Access list of words data 
+            //function getwords(){ 
+            	$.get("{{ url_for('static',filename='UKACD17.TXT') }}", function(data){
+                	 wordlist = data.split("\r\n");
+            	})
+            //}
+            //document.getElementById("wordlist").innerHTML = Array.isArray(wordlist)
+            //wordlist = getwords()
+            //document.getElementById("wordlist").innerHTML = Array.isArray(wordlist)
+            //document.getElementById("wordlist").innerHTML = stringData;
+            
+            //create functions 
+            function nextround(){
+            	round += 1 
+            	document.getElementById("Round").innerHTML = round
+            	theletter.value = ""
+            }
+
+            function addleft(){
+                if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z'){
+                    issueAlert();
+                } else {
+                    theword = theletter.value + theword;
+                    //lastword.push(theword+"\r\n");
+                    //document.getElementById("lastword").innerHTML = lastword;
+                    //document.getElementById("theword").innerHTML = theword;
+                    playmove()
+                };
+            }
+            function addright(){
+                if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z'){
+                    issueAlert();
+                }   else {
+                    theword = theword + theletter.value;
+                    //lastword.push(theword+"\r\n");
+                    //document.getElementById("lastword").innerHTML = lastword; 
+                    //document.getElementById("theword").innerHTML = theword;
+                    playmove()
+                };
+            }
+            function isword(x){
+            		//alert(!(wordlist.indexOf(x) == -1 || x.length < 4))
+                	return !(wordlist.indexOf(x) == -1 || x.length < 4)
+            };
+            function gameover(x){
+            	if (x) {
+            		P2_score += 1 
+                   	document.getElementById("P2_score").innerHTML = P2_score; 
+               	} else {
+               		P1_score += 1 
+               		document.getElementById("P1_score").innerHTML = P1_score; 
+                } 
+                document.getElementById("Message").innerHTML = "Game Over. Play Again. Your move Player "+ ((round % 2)+1)
+                nextround()
+                theword = ""
+                document.getElementById("theword").innerHTML = ""
+                document.getElementById("challengetext").value = ""
+                showChallenge()
+            }; 
+
+            function playmove(){
+            	//alert("got here")
+                lastword.push(theword+"\r\n");
+                document.getElementById("lastword").innerHTML = lastword; 
+                document.getElementById("theword").innerHTML = theword;
+            	if(!isword(theword)){
+                    document.getElementById("Message").innerHTML = "Hmm... interesting move. Now Player "+ ((round % 2)+1) +", enter a letter."
+                    nextround()
+                } else {
+                   	gameover(round % 2 == 1)
+                //round = 0  
+                }
+                showChallenge();
+            };
+            
+            function issueAlert(){
+                alert("Please enter a single lowercase letter only.");
+            };
+            
+            function showChallenge(){
+                if (theword.length >1) {
+                    document.getElementById("challenge").type = "button"
+                } else { 
+                    document.getElementById("challenge").type = "hidden"
+                }
+            }
+
+            //on left button click
+            document.getElementById("leftbutton").addEventListener('click', function(){
+                addleft();
+            });
+            
+            //on right button click 
+            document.getElementById("rightbutton").addEventListener('click', function(){
+                addright();
+            });
+
+            //on left swipe 
+            $("span").on("swipeleft", function(){
+                addleft();  
+            });
+            
+            //on right swipe  
+            $("span").on("swiperight", function(){
+                addright();
+            });
+
+            //on challenge button click 
+            document.getElementById("challenge").addEventListener('click', function(){
+                if (document.getElementById("challenge").value == "Challenge"){
+                	document.getElementById("challengetext").type = "Text"
+                	document.getElementById("challenge").value = "Challenge Accepted"
+                	//alert("gothere")
+                	document.getElementById("Message").innerHTML = "Now Player "+ ((round % 2)+1) + " Enter your word."
+                	nextround(round)
+            	} else {
+            		document.getElementById("challenge").value = "Challenge"
+            		document.getElementById("challengetext").type = "hidden"	
+            		if (document.getElementById("challengetext").value.includes(theword) && isword(document.getElementById("challengetext").value)){
+            			gameover(round % 2 == 0)
+            		} else {
+                        nextround()
+            			gameover(round % 2 == 0)
+            		}
+            		
+            	}
+            });
+
+            //on reset button click 
+            document.getElementById("reset").addEventListener('click', function(){
+            	location.reload()
+            })
+
+        </script>
+        <script src="{{ url_for('static',filename='js/plugins.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+        </script>
+    </body>
+</html>
