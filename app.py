@@ -22,13 +22,17 @@ class l4l_games(db.Model):
     def __repr__(self):
         return '<Name %r>' % self.name
 
-# Set "homepage" to index.html and Save e-mail to database 
+# Set "homepage" to index.html
 @app.route('/')
 def index():
     return render_template('index.html')
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+
 # Save e-mail to database and send to success page
-@app.route('/', methods=['POST'])
+@app.route('/prereg', methods=['POST'])
 def prereg():
     name = None
     if request.method == 'POST':
