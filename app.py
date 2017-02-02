@@ -38,10 +38,10 @@ def prereg():
     name = None
     if request.method == 'POST':
         name = request.form['name']
-##        if not db.session.query(l4l_games).filter(l4l_games.name == name).count():
-        reg = l4l_games(name)
-        db.session.add(reg)
-        db.session.commit()
+        if not db.session.query(l4l_games).filter(l4l_games.name == name).count():
+            reg = l4l_games(name)
+            db.session.add(reg)
+            db.session.commit()
         game = l4l_games.query.filter_by(name=name).first()
         return render_template('playonline.html', Player1=name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.score)
 
