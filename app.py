@@ -13,7 +13,7 @@ class l4l_games(db.Model):
     __tablename__ = "l4l_games"
     #id = db.Column(db.Integer, primary_key=True)
     gameid = db.Column(db.String(120), primary_key=True, default=uuid.uuid4)
-    name = db.Column(db.String(120), unique=True)
+    name = db.Column(db.String(120), unique=False)
     wordgamestate = db.Column(db.String(120), unique=False)
     score = db.Column(db.Integer, unique=False)
 
@@ -39,7 +39,7 @@ def prereg():
     name = None
     if request.method == 'POST':
         name = request.form['name']
-        if not db.session.query(l4l_games).filter(l4l_games.name == name).count():
+        if not (db.session.query(l4l_games).filter(l4l_games.name == name).count()):
             reg = l4l_games(name)
             db.session.add(reg)
             db.session.commit()
@@ -57,18 +57,18 @@ def prereg():
 
 app.route('/playmove', methods=['GET', 'POST'])
 def playmove():
-    game = l4l_games.query.filter_by(gameid=gameid).first()
+    game = db.session.query(l4l_games).filter(gameid==gameid).first()
     if request.method == 'POST':
-        currentword = request.form
+        currentword = request.data
         game.wordgamestate = currentword
         db.session.commit()
         return render_template('playonline.html', Player1=name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.score)
 
 app.route('/keepscore', methods=['GET', 'POST'])
 def keepscore():
-    game = l4l_games.query.filter_by(gameid=gameid).first()
+    game = db.session.query(l4l_games).filter(gameid==gameid).first()
     if request.method == 'POST':
-        P1score = request.form
+        P1score = request.data
         game.score = P1score
         db.session.commit()
         return render_template('playonline.html', Player1=name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.score)
