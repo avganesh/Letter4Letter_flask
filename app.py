@@ -30,7 +30,8 @@ def index():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+    return flask.redirect(flask.url_for('static', filename='favicon.ico', code=301))
+##    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 # Save e-mail to database and send to success page
 @app.route('/', methods=['POST'])
@@ -63,14 +64,14 @@ def playmove():
         db.session.commit()
         return render_template('playonline.html', Player1=name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.score)
 
-app.route('/keepscore', methods=['GET', 'POST'])
-def keepscore():
-    game = l4l_games.query.filter_by(gameid=gameid).first()
-    if request.method == 'POST':
-        P1score = request.form
-        game.score = P1score
-        db.session.commit()
-        return render_template('playonline.html', Player1=name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.score)
+##app.route('/keepscore', methods=['GET', 'POST'])
+##def keepscore():
+##    game = l4l_games.query.filter_by(gameid=gameid).first()
+##    if request.method == 'POST':
+##        P1score = request.form
+##        game.score = P1score
+##        db.session.commit()
+##        return render_template('playonline.html', Player1=name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.score)
 
 
 if __name__ == '__main__':

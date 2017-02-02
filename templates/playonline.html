@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="apple-touch-icon" href="{{ url_for('static',filename='apple-touch-icon.png') }}">
         <!-- Place favicon.ico in the root directory -->
 
 
@@ -136,9 +136,9 @@
                		P1_score += 1 
                		document.getElementById("P1_score").innerHTML = P1_score; 
                 } 
-                $.post("{{url_for('keepscore')}}", function(data){
-                    P1_score;
-                })
+                // $.post("{{url_for('keepscore')}}", function(data){
+                //     P1_score;
+                // })
                 document.getElementById("Message").innerHTML = "Game Over. Play Again. Your move Player "+ ((round % 2)+1)
                 nextround()
                 theword = ""
