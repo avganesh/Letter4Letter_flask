@@ -38,13 +38,12 @@ def prereg():
     name = None
     if request.method == 'POST':
         name = request.form['name']
-        # Check that email does not already exist (not a great query, but works)
         if not db.session.query(l4l_games).filter(l4l_games.name == name).count():
             reg = l4l_games(name)
             db.session.add(reg)
             db.session.commit()
             return render_template('index.html')
-    return render_template('index.html')
+    return render_template('playoffline.html')
 
 @app.route('/playoffline', methods=['GET'])
 def playoffline():
@@ -52,7 +51,6 @@ def playoffline():
     wordgamestate = None
     if request.method == 'GET':
         wordgamestate = ""
-        # Check that email does not already exist (not a great query, but works)
         if not db.session.query(l4l_games).filter(l4l_games.wordgamestate == wordgamestate and l4l_games.gameid == gameid).count():
             reg = l4l_games(wordgamestate)
             db.session.add(reg)
@@ -65,7 +63,6 @@ def playonline():
     wordgamestate = None
     if request.method == 'GET':
         wordgamestate = ""
-        # Check that email does not already exist (not a great query, but works)
         if not db.session.query(l4l_games).filter(l4l_games.wordgamestate == wordgamestate and l4l_games.gameid == gameid).count():
             reg = l4l_games(wordgamestate)
             db.session.add(reg)
@@ -78,7 +75,6 @@ def playmove():
     wordgamestate = None
     if request.method == 'POST':
         wordgamestate = request.form['theletter']
-        # Check that email does not already exist (not a great query, but works)
         if not db.session.query(l4l_games).filter(l4l_games.wordgamestate == wordgamestate and l4l_games.gameid == gameid).count():
             reg = l4l_games(wordgamestate)
             db.session.add(reg)
