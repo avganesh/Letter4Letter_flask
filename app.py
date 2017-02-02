@@ -59,7 +59,7 @@ def playoffline():
             return render_template('playoffline.html')
     #return render_template('playoffline.html')
 
-@app.route('/playonline', methods=['GET'], ['POST'])
+@app.route('/playonline', methods=['GET', 'POST'])
 def playonline():
     game = l4l_games.query.filter_by(gameid=gameid).first()
     if request.method == 'GET':
