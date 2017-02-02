@@ -38,51 +38,50 @@ def prereg():
     name = None
     if request.method == 'POST':
         name = request.form['name']
-        if not db.session.query(l4l_games).filter(l4l_games.name == name).count():
-            reg = l4l_games(name)
-            db.session.add(reg)
-            db.session.commit()
-            return render_template('index.html')
-        game = l4l_games.query.filter_by(name=name).first()
-    return render_template('playonline.html', Player1=name, gameid=game.gameid)
-
-@app.route('/playoffline', methods=['GET'])
-def playoffline():
-    return render_template('playoffline.html')
-    wordgamestate = None
-    if request.method == 'GET':
-        wordgamestate = ""
-        if not db.session.query(l4l_games).filter(l4l_games.wordgamestate == wordgamestate and l4l_games.gameid == gameid).count():
-            reg = l4l_games(wordgamestate)
-            db.session.add(reg)
-            db.session.commit()
-            return render_template('playoffline.html')
-    #return render_template('playoffline.html')
-
-@app.route('/playonline', methods=['GET', 'POST'])
-def playonline():
-    game = l4l_games.query.filter_by(gameid=gameid).first()
-    if request.method == 'GET':
-        game.wordgamestate = request.form['theletter']
+##        if not db.session.query(l4l_games).filter(l4l_games.name == name).count():
+        reg = l4l_games(name)
+        db.session.add(reg)
         db.session.commit()
-    return render_template('playonline.html', theword=game.wordgamestate, gameid=game.gameid, Player1=game.name)
+        game = l4l_games.query.filter_by(name=name).first()
+        return render_template('playonline.html', Player1=name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.score)
 
-@app.route('/playmove', methods=['POST'])
+
+##@app.route('/playonline', methods=['GET', 'POST'])
+##def playonline():
+##    
+##    if request.method == 'GET':
+##        game.wordgamestate = request.form['theletter']
+##        db.session.commit()
+##    return render_template('playonline.html', theword=game.wordgamestate, gameid=game.gameid, Player1=game.name)
+
+@app.route('/playmove', methods=['GET', 'POST'])
 def playmove():
     wordgamestate = None
+    game = l4l_games.query.filter_by(gameid=gameid).first()
     if request.method == 'POST':
         wordgamestate = request.form['theletter']
-        if not db.session.query(l4l_games).filter(l4l_games.wordgamestate == wordgamestate and l4l_games.gameid == gameid).count():
-            reg = l4l_games(wordgamestate)
-            db.session.add(reg)
-            db.session.commit()
-            return render_template('playonline.html')
-        else:
-            reg = l4l_games(wordgamestate)
-            db.session.add(reg)
-            db.session.commit()
-            return render_template('playonline.html')
-    return render_template('playonline.html')
+        game.wordgamestate = request.form['theletter']
+        db.session.commit()
+        return render_template('playonline.html', Player1=name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.score)
+
+app.route('/playmove', methods=['GET', 'POST'])
+def playmove():
+    game = l4l_games.query.filter_by(gameid=gameid).first()
+    if request.method == 'POST':
+        currentword = request.form
+        game.wordgamestate = currentword
+        db.session.commit()
+        return render_template('playonline.html', Player1=name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.score)
+
+app.route('/keepscore', methods=['GET', 'POST'])
+def keepscore():
+    game = l4l_games.query.filter_by(gameid=gameid).first()
+    if request.method == 'POST':
+        P1score = request.form
+        game.score = P1score
+        db.session.commit()
+        return render_template('playonline.html', Player1=name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.score)
+
 
 if __name__ == '__main__':
     app.debug = True

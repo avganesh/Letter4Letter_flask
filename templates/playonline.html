@@ -40,7 +40,7 @@
         <div class="container-fluid">
             Round: <span id="Round"></span>
             <p id="Message">Enter a letter to start playing</p>
-            <form class="form-inline" method='POST'>
+            <form class="form-inline">
                 <input id="leftbutton" type="button" value="Left" class="btn btn-primary">
                 <input id="theletter" type="text" class="form-control">
                 <input id="rightbutton" type="button" value="Right" class="btn btn-primary">
@@ -56,7 +56,7 @@
                 <input id="challenge" type="hidden" value="Challenge" class="btn btn-danger"> 
                 <input id="challengetext" type="hidden" class="form-control">
             </form>
-            <br> {{Player1}} score: <span id="P1_score"></span>
+            <br> {{Player1}} score: <span id="P1_score">{{ P1score }}</span>
             <br> Player 2 score: <span id="P2_score"></span>
             <br>
             <input id="reset" type="button" value="Reset" class="btn btn-warning">
@@ -136,6 +136,9 @@
                		P1_score += 1 
                		document.getElementById("P1_score").innerHTML = P1_score; 
                 } 
+                $.post("{{url_for('keepscore')}}", function(data){
+                    P1_score;
+                })
                 document.getElementById("Message").innerHTML = "Game Over. Play Again. Your move Player "+ ((round % 2)+1)
                 nextround()
                 theword = ""
@@ -146,6 +149,9 @@
 
             function playmove(){
             	//alert("got here")
+                $.post("{{url_for('playmove')}}", function(data){
+                    theword;
+                })
                 lastword.push(theword+"\r\n");
                 document.getElementById("lastword").innerHTML = lastword; 
                 document.getElementById("theword").innerHTML = theword;
