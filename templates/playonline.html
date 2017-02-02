@@ -136,9 +136,7 @@
                		P1_score += 1 
                		document.getElementById("P1_score").innerHTML = P1_score; 
                 } 
-                // $.post("{{url_for('keepscore')}}", function(data){
-                //     P1_score;
-                // })
+                
                 document.getElementById("Message").innerHTML = "Game Over. Play Again. Your move Player "+ ((round % 2)+1)
                 nextround()
                 theword = ""
