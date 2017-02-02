@@ -136,9 +136,17 @@
                		P1_score += 1 
                		document.getElementById("P1_score").innerHTML = P1_score; 
                 } 
-                $.post("{{url_for('keepscore')}}", function(data){
-                    P1_score;
-                })
+                $.ajax({
+                    url: '/keepscore',
+                    data: P1_score,
+                    type: 'POST',
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
                 document.getElementById("Message").innerHTML = "Game Over. Play Again. Your move Player "+ ((round % 2)+1)
                 nextround()
                 theword = ""
@@ -149,9 +157,17 @@
 
             function playmove(){
             	//alert("got here")
-                $.post("{{url_for('playmove')}}", function(data){
-                    theword;
-                })
+                $.ajax({
+                    url: '/playmove',
+                    data: theword,
+                    type: 'POST',
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
                 lastword.push(theword+"\r\n");
                 document.getElementById("lastword").innerHTML = lastword; 
                 document.getElementById("theword").innerHTML = theword;

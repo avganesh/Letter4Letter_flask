@@ -55,7 +55,7 @@ def prereg():
 ##        db.session.commit()
 ##    return render_template('playonline.html', theword=game.wordgamestate, gameid=game.gameid, Player1=game.name)
 
-app.route('/', methods=['GET', 'POST'], endpoint='playmove')
+app.route('/playmove', methods=['GET', 'POST'])
 def playmove():
     game = l4l_games.query.filter_by(gameid=gameid).first()
     if request.method == 'POST':
@@ -64,7 +64,7 @@ def playmove():
         db.session.commit()
         return render_template('playonline.html', Player1=name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.score)
 
-app.route('/', methods=['GET', 'POST'], endpoint='keepscore')
+app.route('/keepscore', methods=['GET', 'POST'])
 def keepscore():
     game = l4l_games.query.filter_by(gameid=gameid).first()
     if request.method == 'POST':
