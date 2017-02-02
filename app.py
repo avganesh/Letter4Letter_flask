@@ -28,9 +28,9 @@ class l4l_games(db.Model):
 def index():
     return render_template('index.html')
 
-@app.route('/favicon.ico')
-def favicon():
-    return flask.redirect(flask.url_for('static', filename='favicon.ico', code=301))
+##@app.route('/favicon.ico')
+##def favicon():
+##    return flask.redirect(flask.url_for('static', filename='favicon.ico', code=301))
 ##    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 # Save e-mail to database and send to success page
