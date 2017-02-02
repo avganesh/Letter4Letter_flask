@@ -43,7 +43,8 @@ def prereg():
             db.session.add(reg)
             db.session.commit()
             return render_template('index.html')
-    return render_template('playoffline.html')
+        game = l4l_games.query.filter_by(name=name).first()
+    return render_template('playonline.html', Player1=name, gameid=game.gameid)
 
 @app.route('/playoffline', methods=['GET'])
 def playoffline():
@@ -58,17 +59,13 @@ def playoffline():
             return render_template('playoffline.html')
     #return render_template('playoffline.html')
 
-@app.route('/playonline', methods=['GET'])
+@app.route('/playonline', methods=['GET'], ['POST'])
 def playonline():
-    wordgamestate = None
+    game = l4l_games.query.filter_by(gameid=gameid).first()
     if request.method == 'GET':
-        wordgamestate = ""
-        if not db.session.query(l4l_games).filter(l4l_games.wordgamestate == wordgamestate and l4l_games.gameid == gameid).count():
-            reg = l4l_games(wordgamestate)
-            db.session.add(reg)
-            db.session.commit()
-            return render_template('playonline.html')
-    return render_template('playonline.html')
+        game.wordgamestate = request.form['theletter']
+        db.session.commit()
+    return render_template('playonline.html', theword=game.wordgamestate, gameid=game.gameid, Player1=game.name)
 
 @app.route('/playmove', methods=['POST'])
 def playmove():

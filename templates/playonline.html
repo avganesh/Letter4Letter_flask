@@ -46,7 +46,7 @@
                 <input id="rightbutton" type="button" value="Right" class="btn btn-primary">
             </form>
             <br>
-            <br> Current Turn: <span id="theword"></span>
+            <br> Current Turn: <span id="theword"> {{theword}} </span>
             <br> Previous Turns: 
             <br><span id="lastword"></span>
             <br> 
@@ -56,10 +56,14 @@
                 <input id="challenge" type="hidden" value="Challenge" class="btn btn-danger"> 
                 <input id="challengetext" type="hidden" class="form-control">
             </form>
-            <br> Player 1 score: <span id="P1_score"></span>
+            <br> {{Player1}} score: <span id="P1_score"></span>
             <br> Player 2 score: <span id="P2_score"></span>
             <br>
             <input id="reset" type="button" value="Reset" class="btn btn-warning">
+            <br>
+            <br>
+            <br>
+            <p id="gameid" >{{ gameid }}</p>
         </div>
         <!-- <div class="container-fluid">
             <form class="col-lg-12" method="POST">
