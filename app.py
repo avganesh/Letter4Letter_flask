@@ -19,11 +19,11 @@ class l4l_games(db.Model):
     P1score = db.Column(db.Integer, unique=False)
     P2score = db.Column(db.Integer, unique=False)
 
-    def __init__(self, gameid):
-        self.gameid = gameid
+    def __init__(self, P1name):
+        self.P1name = P1name
 
     def __repr__(self):
-        return '<Name %r>' % self.gameid
+        return '<Name %r>' % self.P1name
 
 # Set "homepage" to index.html
 @app.route('/')
