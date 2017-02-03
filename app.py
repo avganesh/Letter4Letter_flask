@@ -66,7 +66,10 @@ def joingame():
 @app.route('/playmove', methods=['GET', 'POST'])
 def playmove():
     if request.method == 'POST':
-        currentword = request.json['wordData']
+        if request.json['wordData'] = None:
+            currentword = ""
+        else:
+            currentword = request.json['wordData']
         theletter = request.json['letterData']
         gameid = request.json['gameData']
         move = request.json['moveData']
