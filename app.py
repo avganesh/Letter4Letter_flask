@@ -30,6 +30,11 @@ class l4l_games(db.Model):
 def index():
     return render_template('index.html')
 
+@app.route('/splash', methods=['GET', 'POST'])
+def index():
+    if request.method == 'GET':
+        return render_template('splash.html')
+
 ##@app.route('/favicon.ico')
 ##def favicon():
 ##    return flask.redirect(flask.url_for('static', filename='favicon.ico', code=301))

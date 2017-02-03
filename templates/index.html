@@ -18,78 +18,16 @@
     <body>
         <h1>Letter 4 Letter Web App</h1>
         <div class="container-fluid" id="result">
-            <p id="Instructions"> 
-            <h4>Here's how you play the game: </h4>
-            <br> First a player enters a letter
-            <br> Click Right or Left to submit 
-            <br> Then the next player enters a letter 
-            <br> Click Right or Left to submit
-            <br> and so on...
-            <br> Use Challenge when you think your opponent is making up a word that doesn't exist. 
-            <br>
-            The player that enters a letter, which spells a word with 4 letters or more <strong> loses </strong> 
-            <br>
-            </p>
-        
-            <br>
-            <p>Start a New Game </p>
-        
-            <form class="col-lg-12" method="POST">
-                <input placeholder="Enter your name" id="newName">
-                <span><button class="btn btn-lg btn-success" type="button" id="StartNew">Start</button></span>
-            </form>
-        
-            <br>
-            <br>
-            <p> Join an Existing Game: </p>
-            <br>
-        
-            <form class="col-lg-12" method="POST">
-                <input placeholder="Enter your name" id="joinName">
-                <input placeholder="Enter the Game ID"  name="gameid" id="gameid">
-                <span><button class="btn btn-lg btn-success" type="button" id="JoinExisting">Join</button></span>
-            </form>
-        
-            <br>
-            <br>
-            <br>
-            <p> OR </p>
-            <br>
-            <br>
-        
-            <form class="col-lg-12" action="https://letter-4-letter.herokuapp.com/" method="GET">
-                <button class="btn btn-lg btn-primary" type="submit">Play Offline</button>
-            </form>
-            <br>
+            {{ result }}
         </div>
         <br>
         <script src= "https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
-        //on Start New button click
-            document.getElementById("StartNew").addEventListener('click', function(){
+        //on Load
+            document.ready(function(){
                     $.ajax({
-                        url: '/newgame',
-                        data: JSON.stringify({'nameData': document.getElementById("newName").value}),
-                        type: 'POST',
-                        contentType: 'application/json;charset=UTF-8',
-                        processData: false, 
-                        success: function(response) {
-                            var myDiv = $('#resultarea'); 
-                            myDiv.html(response);
-                        },
-                        error: function(error) {
-                            console.log(error);
-                        }
-                    });;
-            });
-        //On Join Existing Button click
-            document.getElementById("JoinExisting").addEventListener('click', function(){
-                    $.ajax({
-                        url: '/joingame',
-                        data: JSON.stringify({'nameData': document.getElementById("joinName").value, 'gameData':document.getElementById("gameid").value}),
-                        type: 'POST',
-                        contentType: 'application/json;charset=UTF-8',
-                        processData: false, 
+                        url: '/splash',
+                        type: 'GET',
                         success: function(response) {
                             var myDiv = $('#resultarea'); 
                             myDiv.html(response);
