@@ -26,7 +26,7 @@ class l4l_games(db.Model):
         return '<Name %r>' % self.name
 
 # Set "homepage" to index.html
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
     return render_template('index.html')
 
@@ -36,7 +36,7 @@ def index():
 ##    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 # Save e-mail to database and send to success page
-@app.route('/newgame', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def newgame():
     name = None
     if request.method == 'POST':
@@ -47,7 +47,7 @@ def newgame():
         game = l4l_games.query.filter_by(P1name=name).first()
         return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
 
-@app.route('/joingame', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def joingame():
     name = None
     if request.method == 'POST':
