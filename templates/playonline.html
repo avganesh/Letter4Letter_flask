@@ -46,7 +46,7 @@
                 <input id="rightbutton" type="button" value="Right" class="btn btn-primary">
             </form>
             <br>
-            <br> Current Turn: <span id="theword"> {{theword}} </span>
+            <br> Current Turn: <span id="theword"> "{{theword}}" </span>
             <br> Previous Turns: 
             <br><span id="lastword"></span>
             <br> 
@@ -70,7 +70,7 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
             //set vars 
             var lastword = new Array()
-            var theword = {{theword}}
+            var theword = "{{theword}}"
             var theletter = document.getElementById("theletter")           
             var wordlist = new Object();
             var round = 1;
@@ -170,7 +170,7 @@
             	//alert("got here")
                 $.ajax({
                     url: '/playmove',
-                    data: JSON.stringify({'moveData':x, 'letterData': theletter.value, 'wordData':{{theword}}, 'gameData':document.getElementById("gameid").innerHTML}),
+                    data: JSON.stringify({'moveData':x, 'letterData': theletter.value, 'wordData':"{{theword}}", 'gameData':document.getElementById("gameid").innerHTML}),
                     type: 'POST',
                     contentType: 'application/json;charset=UTF-8',
                     processData: false, 
