@@ -31,7 +31,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/splash', methods=['GET', 'POST'])
-def index():
+def splash():
     if request.method == 'GET':
         return render_template('splash.html')
 
