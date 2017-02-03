@@ -38,23 +38,23 @@ def index():
 # Save e-mail to database and send to success page
 @app.route('/', methods=['GET', 'POST'])
 def newgame():
-    name = None
+    P1name = None
     if request.method == 'POST':
-        name = request.form['name']
+        P1name = request.form['name']
         reg = l4l_games(P1name)
         db.session.add(reg)
         db.session.commit()
-        game = l4l_games.query.filter_by(P1name=name).first()
+        game = l4l_games.query.filter_by(P1name=P1name).first()
         return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
 
 @app.route('/', methods=['GET', 'POST'])
 def joingame():
-    name = None
+    P2name = None
     if request.method == 'POST':
-        name = request.form['name']
+        P2name = request.form['name']
         gameid = request.form['gameid']
         game = db.session.query(l4l_games).filter(gameid==gameid).first()
-        game.P2name = name 
+        game.P2name = P2name 
         return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
 
 
