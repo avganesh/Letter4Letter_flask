@@ -17,7 +17,7 @@
     </head>
     <body>
         <h1>Letter 4 Letter Web App</h1>
-        <div class="container-fluid">
+        <div class="container-fluid" id="result">
             <p id="Instructions"> 
             <h4>Here's how you play the game: </h4>
             <br> First a player enters a letter
@@ -30,33 +30,33 @@
             The player that enters a letter, which spells a word with 4 letters or more <strong> loses </strong> 
             <br>
             </p>
-        </div>
-        <br>
-        <p>Start a New Game </p>
-        <div class="container-fluid">
+        
+            <br>
+            <p>Start a New Game </p>
+        
             <form class="col-lg-12" method="POST">
                 <input placeholder="Enter your name" id="newName">
                 <span><button class="btn btn-lg btn-success" type="button" id="StartNew">Start</button></span>
             </form>
-        </div>
-        <br>
-        <br>
-        <p> Join an Existing Game: </p>
-        <br>
-        <div class="container-fluid">
+        
+            <br>
+            <br>
+            <p> Join an Existing Game: </p>
+            <br>
+        
             <form class="col-lg-12" method="POST">
                 <input placeholder="Enter your name" id="joinName">
                 <input placeholder="Enter the Game ID"  name="gameid" id="gameid">
                 <span><button class="btn btn-lg btn-success" type="button" id="JoinExisting">Join</button></span>
             </form>
-        </div>
-        <br>
-        <br>
-        <br>
-        <p> OR </p>
-        <br>
-        <br>
-        <div class="container-fluid">
+        
+            <br>
+            <br>
+            <br>
+            <p> OR </p>
+            <br>
+            <br>
+        
             <form class="col-lg-12" action="https://letter-4-letter.herokuapp.com/" method="GET">
                 <button class="btn btn-lg btn-primary" type="submit">Play Offline</button>
             </form>
@@ -74,7 +74,8 @@
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
                         success: function(response) {
-                            response;
+                            var myDiv = $('#resultarea'); 
+                            myDiv.html(response);
                         },
                         error: function(error) {
                             console.log(error);
@@ -90,7 +91,8 @@
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
                         success: function(response) {
-                            response;
+                            var myDiv = $('#resultarea'); 
+                            myDiv.html(response);
                         },
                         error: function(error) {
                             console.log(error);
