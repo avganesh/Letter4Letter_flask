@@ -14,7 +14,7 @@ class l4l_games(db.Model):
     #id = db.Column(db.Integer, primary_key=True)
     gameid = db.Column(db.String(120), primary_key=True, default=uuid.uuid4)
     P1name = db.Column(db.String(120), unique=False)
-    P1name = db.Column(db.String(120), unique=False)
+    P2name = db.Column(db.String(120), unique=False)
     wordgamestate = db.Column(db.String(120), unique=False)
     P1score = db.Column(db.Integer, unique=False)
     P2score = db.Column(db.Integer, unique=False)
@@ -38,7 +38,6 @@ def index():
 # Save e-mail to database and send to success page
 @app.route('/', methods=['GET', 'POST'])
 def newgame():
-    P1name = None
     if request.method == 'POST':
         P1name = request.form['name']
         reg = l4l_games(P1name)
@@ -49,7 +48,6 @@ def newgame():
 
 @app.route('/', methods=['GET', 'POST'])
 def joingame():
-    P2name = None
     if request.method == 'POST':
         P2name = request.form['name']
         gameid = request.form['gameid']
