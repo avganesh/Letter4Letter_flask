@@ -74,9 +74,9 @@ def keepscore():
         gameid = request.json['gameData']
         score = request.json['scoreData']
         game = db.session.query(l4l_games).filter(gameid==gameid).first()
-        if request.json['Player'] = "P1":
+        if request.json['Player'] == "P1":
             game.P1score = score
-        elif request.json['Player'] = "P2":
+        elif request.json['Player'] == "P2":
             game.P2score = score
         db.session.commit()
         return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
