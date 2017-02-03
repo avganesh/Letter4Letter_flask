@@ -90,7 +90,9 @@ def keepscore():
 
 @app.route('/refresh', methods=['GET', 'POST'])
 def refresh():
-    game = l4l_games.query.filter_by(gameid=gameid).first()
+    if request.method == 'POST':
+        gameid = request.json['gameData']
+        game = l4l_games.query.filter_by(gameid=gameid).first()
     return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
 
 if __name__ == '__main__':
