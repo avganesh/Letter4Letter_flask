@@ -30,8 +30,7 @@
                         type: 'GET',
                         context: document.body,
                         success: function(response) {
-                            var myDiv = $('#resultarea'); 
-                            myDiv.html(response)
+                            $("body").html(response)
                         },
                         error: function(error) {
                             console.log(error);
