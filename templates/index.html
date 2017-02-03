@@ -28,9 +28,11 @@
                     $.ajax({
                         url: '/splash',
                         type: 'GET',
+                        context: document.body,
                         success: function(response) {
                             var myDiv = $('#resultarea'); 
-                            myDiv.html(response);
+                            myDiv.html(response)
+                            alert(Got Here);
                         },
                         error: function(error) {
                             console.log(error);
