@@ -44,7 +44,7 @@ def newgame():
         db.session.add(reg)
         db.session.commit()
         game = l4l_games.query.filter_by(P1name=P1name).first()
-        return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
 
 @app.route('/joingame', methods=['GET', 'POST'])
 def joingame():
@@ -52,8 +52,10 @@ def joingame():
         P2name = request.json['nameData']
         gameid = request.json['gameData']
         game = db.session.query(l4l_games).filter_by(gameid=gameid).first()
-        game.P2name = P2name 
-        return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
+        game.P2name = P2name
+        db.session.commit()
+        game = l4l_games.query.filter_by(gameid=gameid).first()
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
 
 
 @app.route('/playmove', methods=['GET', 'POST'])
@@ -64,7 +66,8 @@ def playmove():
         game = db.session.query(l4l_games).filter_by(gameid=gameid).first()
         game.wordgamestate = currentword
         db.session.commit()
-        return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
+        game = l4l_games.query.filter_by(gameid=gameid).first()
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
 
 @app.route('/keepscore', methods=['GET', 'POST'])
 def keepscore():
@@ -77,11 +80,12 @@ def keepscore():
         elif request.json['Player'] == "P2":
             game.P2score = score
         db.session.commit()
-        return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
+        game = l4l_games.query.filter_by(gameid=gameid).first()
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
 
 @app.route('/refresh', methods=['GET', 'POST'])
 def refresh():
-    game = db.session.query(l4l_games).filter(gameid==gameid).first()
+    game = l4l_games.query.filter_by(gameid=gameid).first()
     return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
 
 if __name__ == '__main__':
