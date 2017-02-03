@@ -39,7 +39,7 @@ def index():
 @app.route('/newgame', methods=['GET', 'POST'])
 def newgame():
     if request.method == 'POST':
-        P1name = request.json['name']
+        P1name = request.json['nameData']
         reg = l4l_games(P1name)
         db.session.add(reg)
         db.session.commit()
@@ -49,8 +49,8 @@ def newgame():
 @app.route('/joingame', methods=['GET', 'POST'])
 def joingame():
     if request.method == 'POST':
-        P2name = request.json['name']
-        gameid = request.json['gameid']
+        P2name = request.json['nameData']
+        gameid = request.json['gameData']
         game = db.session.query(l4l_games).filter(gameid==gameid).first()
         game.P2name = P2name 
         return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score)
