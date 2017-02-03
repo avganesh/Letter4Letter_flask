@@ -134,7 +134,7 @@
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
                         success: function(response) {
-                            console.log(response);
+                            $("body").html(response);
                         },
                         error: function(error) {
                             console.log(error);
@@ -150,7 +150,7 @@
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
                         success: function(response) {
-                            console.log(response);
+                            $("body").html(response);
                         },
                         error: function(error) {
                             console.log(error);
@@ -175,7 +175,7 @@
                     contentType: 'application/json;charset=UTF-8',
                     processData: false, 
                     success: function(response) {
-                        console.log(response);
+                        $("body").html(response);
                     },
                     error: function(error) {
                         console.log(error);
