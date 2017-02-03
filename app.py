@@ -26,7 +26,7 @@ class l4l_games(db.Model):
         return '<Name %r>' % self.name
 
 # Set "homepage" to index.html
-@app.route('/', , methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
 
