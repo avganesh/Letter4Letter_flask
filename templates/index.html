@@ -69,7 +69,7 @@
             document.getElementById("StartNew").addEventListener('click', function(){
                     $.ajax({
                         url: '/newgame',
-                        data: JSON.stringify({'nameData': document.getElementById("joinName")}),
+                        data: JSON.stringify({'nameData': document.getElementById("newName").value}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
@@ -85,7 +85,7 @@
             document.getElementById("JoinExisting").addEventListener('click', function(){
                     $.ajax({
                         url: '/joingame',
-                        data: JSON.stringify({'nameData': document.getElementById("joinName"), 'gameData':document.getElementById("gameid")}),
+                        data: JSON.stringify({'nameData': document.getElementById("joinName").value, 'gameData':document.getElementById("gameid").value}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
