@@ -32,21 +32,22 @@
             </p>
         </div>
         <br>
+        <p>Start a New Game </p>
         <div class="container-fluid">
             <form class="col-lg-12" method="POST">
-                <input placeholder="Enter your name" action="{{url_for('newgame')}}" type="name" name="name">
-                <span><button class="btn btn-lg btn-success" type="submit">GO</button></span>
+                <input placeholder="Enter your name" type="name" name="name" id="newName">
+                <span><button class="btn btn-lg btn-success" type="submit" id="StartNew">Start</button></span>
             </form>
         </div>
         <br>
         <br>
-        <p> Join an existing game: </p>
+        <p> Join an Existing Game: </p>
         <br>
         <div class="container-fluid">
             <form class="col-lg-12" method="POST">
-                <input placeholder="Enter your name" action="{{url_for('joingame')}}" type="name" name="name">
-                <input placeholder="Enter the Game ID" action="{{url_for('joingame')}}" name="gameid">
-                <span><button class="btn btn-lg btn-success" type="submit">GO</button></span>
+                <input placeholder="Enter your name" type="name" name="name" id="joinName">
+                <input placeholder="Enter the Game ID"  name="gameid" id="gameid">
+                <span><button class="btn btn-lg btn-success" type="submit" id="JoinExisting">Join</button></span>
             </form>
         </div>
         <br>
@@ -63,6 +64,40 @@
         </div>
         <br>
         <script src= "https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
+        //on Start New button click
+            document.getElementById("StartNew").addEventListener('click', function(){
+                    $.ajax({
+                        url: '/newgame',
+                        data: JSON.stringify({'nameData': document.getElementById("joinName")}),
+                        type: 'POST',
+                        contentType: 'application/json;charset=UTF-8',
+                        processData: false, 
+                        success: function(response) {
+                            console.log(response);
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });;
+            });
+        //On Join Existing Button click
+            document.getElementById("JoinExisting").addEventListener('click', function(){
+                    $.ajax({
+                        url: '/joingame',
+                        data: JSON.stringify({'nameData': document.getElementById("joinName"), 'gameData':document.getElementById("gameid")}),
+                        type: 'POST',
+                        contentType: 'application/json;charset=UTF-8',
+                        processData: false, 
+                        success: function(response) {
+                            console.log(response);
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });;
+            });
+        </script>    
         <script src="{{ url_for('static',filename='js/plugins.js') }}"></script>
         <script src="{{ url_for('static',filename='js/main.js') }}"></script>
 
