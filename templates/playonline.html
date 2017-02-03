@@ -53,7 +53,7 @@
             <p id="wordlist"> </p>
             <br>
             <form class="form-inline">
-                <input id="challenge" type="hidden" value="Challenge" class="btn btn-danger"> 
+                <input id="challenge" type="hidden" value="Challenge" class="btn btn-danger" disabled="disabled"> 
                 <input id="challengetext" type="hidden" class="form-control">
             </form>
             <br> {{ Player1 }} score: <span id="P1_score">{{ P1score }}</span>
@@ -70,7 +70,7 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
             //set vars 
             var lastword = new Array()
-            var theword = document.getElementById("theword").innerHTML
+            var theword = {{theword}}
             var theletter = document.getElementById("theletter")           
             var wordlist = new Object();
             var round = 1;
@@ -101,22 +101,22 @@
                 if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z'){
                     issueAlert();
                 } else {
-                    theword = theletter.value + theword;
+                    //theword = theletter.value + theword;
                     //lastword.push(theword+"\r\n");
                     //document.getElementById("lastword").innerHTML = lastword;
                     //document.getElementById("theword").innerHTML = theword;
-                    playmove()
+                    playmove("left")
                 };
             }
             function addright(){
                 if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z'){
                     issueAlert();
                 }   else {
-                    theword = theword + theletter.value;
+                    //theword = theword + theletter.value;
                     //lastword.push(theword+"\r\n");
                     //document.getElementById("lastword").innerHTML = lastword; 
                     //document.getElementById("theword").innerHTML = theword;
-                    playmove()
+                    playmove("right")
                 };
             }
             function isword(x){
@@ -166,11 +166,11 @@
                 showChallenge()
             }; 
 
-            function playmove(){
+            function playmove(x){
             	//alert("got here")
                 $.ajax({
                     url: '/playmove',
-                    data: JSON.stringify({'moveData': theword, 'gameData':document.getElementById("gameid").innerHTML}),
+                    data: JSON.stringify({'moveData':x, 'letterData': theletter.value, 'wordData':{{theword}}, 'gameData':document.getElementById("gameid").innerHTML}),
                     type: 'POST',
                     contentType: 'application/json;charset=UTF-8',
                     processData: false, 
@@ -216,15 +216,15 @@
                 addright();
             });
 
-            //on left swipe 
-            $("span").on("swipeleft", function(){
-                addleft();  
-            });
+            // // on left swipe 
+            // $("span").on("swipeleft", function(){
+            //     addleft();  
+            // });
             
-            //on right swipe  
-            $("span").on("swiperight", function(){
-                addright();
-            });
+            // //on right swipe  
+            // $("span").on("swiperight", function(){
+            //     addright();
+            // });
 
             //on challenge button click 
             document.getElementById("challenge").addEventListener('click', function(){

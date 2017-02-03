@@ -66,8 +66,14 @@ def joingame():
 @app.route('/playmove', methods=['GET', 'POST'])
 def playmove():
     if request.method == 'POST':
-        currentword = request.json['moveData']
+        currentword = request.json['wordData']
+        theletter = request.json['letterData']
         gameid = request.json['gameData']
+        move = request.json['moveData']
+        if move == "left":
+            currentword = theletter+currentword
+        elif move == "right":
+            currentword = currentword+theletter
         game = db.session.query(l4l_games).filter_by(gameid=gameid).first()
         game.wordgamestate = currentword
         db.session.commit()
