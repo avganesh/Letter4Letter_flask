@@ -19,7 +19,7 @@ class l4l_games(db.Model):
     P1score = db.Column(db.Integer, unique=False)
     P2score = db.Column(db.Integer, unique=False)
 
-    def __init__(self, P1name):
+    def __init__(self, gameid):
         self.gameid = gameid
 
     def __repr__(self):
