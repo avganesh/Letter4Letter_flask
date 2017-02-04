@@ -262,7 +262,7 @@
             });
 
             //on refresh button click
-            document.getElementById("reset").addEventListener('click', function(){
+            document.getElementById("refresh").addEventListener('click', function(){
                     $.ajax({
                         url: '/refresh',
                         data: JSON.stringify({'playerData':"{{yourname}}", 'gameData':document.getElementById("gameid").innerHTML}),
