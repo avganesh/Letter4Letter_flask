@@ -62,9 +62,9 @@ def joingame():
         gameid = request.json['gameData']
         player = request.json['playerData']
         game = db.session.query(l4l_games).filter_by(gameid=gameid).first()
-        if player = "P1":
+        if player == "P1":
             game.P1name = name
-        elif player = "P2":
+        elif player == "P2":
             game.P2name = name
         db.session.commit()
         game = l4l_games.query.filter_by(gameid=gameid).first()
