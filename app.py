@@ -16,6 +16,7 @@ class l4l_games(db.Model):
     P1name = db.Column(db.String(120), unique=False)
     P2name = db.Column(db.String(120), unique=False)
     wordgamestate = db.Column(db.String(120), unique=False)
+    lastmove = db.Column(db.String(120), unique=False)
     P1score = db.Column(db.Integer, unique=False)
     P2score = db.Column(db.Integer, unique=False)
 
@@ -52,6 +53,7 @@ def newgame():
         game.P1score = 0
         game.P2score = 0
         game.wordgamestate = ""
+        game.lastmove = ""
         db.session.commit()
     return response
 
@@ -68,7 +70,7 @@ def joingame():
             game.P2name = name
         db.session.commit()
         game = l4l_games.query.filter_by(gameid=gameid).first()
-    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove="", roundnum=0, yourname=name)
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=0, yourname=name)
 
 
 @app.route('/playmove', methods=['GET', 'POST'])
@@ -85,9 +87,10 @@ def playmove():
             currentword = currentword+theletter
         game = db.session.query(l4l_games).filter_by(gameid=gameid).first()
         game.wordgamestate = currentword
+        game.lastmove = name
         db.session.commit()
         game = l4l_games.query.filter_by(gameid=gameid).first()
-    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=name, roundnum=len(currentword), yourname=name)
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(currentword), yourname=name)
 
 @app.route('/keepscore', methods=['GET', 'POST'])
 def keepscore():
@@ -102,15 +105,14 @@ def keepscore():
             game.P2score = score
         db.session.commit()
         game = l4l_games.query.filter_by(gameid=gameid).first()
-    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=name, roundnum=len(currentword), yourname=name)
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(currentword), yourname=name)
 
 @app.route('/refresh', methods=['GET', 'POST'])
 def refresh():
     if request.method == 'POST':
         gameid = request.json['gameData']
-        name = request.json['playerData']
         game = l4l_games.query.filter_by(gameid=gameid).first()
-    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=name, roundnum=len(game.wordgamestate), yourname=name)
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(game.wordgamestate), yourname=name)
 
 if __name__ == '__main__':
     app.debug = True
