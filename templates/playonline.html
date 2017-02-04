@@ -29,26 +29,35 @@
             <br> First a player enters a letter
             <br> Click Right or Left to submit 
             <br> Then the next player enters a letter 
+            <br> Click refresh to see their entry
+            <br> Then the first player enters a letter again
             <br> Click Right or Left to submit
             <br> and so on...
-            <br> Use Challenge when you think your opponent is making up a word that doesn't exist. 
+            <!-- <br> Use Challenge when you think your opponent is making up a word that doesn't exist.  -->
             <br>
             The player that enters a letter, which spells a word with 4 letters or more <strong> loses </strong> 
 
             </p>
+            <br>
+            <input id="refresh" type="button" value="Refresh" class="btn btn-primary">
+            <br>
         
-        
-            Round: <span id="Round"></span>
+            Round: <span id="Round">{{roundnum}}</span>
+            <br>
+            Player: <span id="yourname">{{yourname}}</span>
+            <br>
             <p id="Message">Enter a letter to start playing</p>
             <form class="form-inline">
-                <input id="leftbutton" type="button" value="Left" class="btn btn-primary">
                 <input id="theletter" type="text" class="form-control">
+                <input id="leftbutton" type="button" value="Left" class="btn btn-primary">
                 <input id="rightbutton" type="button" value="Right" class="btn btn-primary">
             </form>
             <br>
             <br> Current Turn: <span id="theword"> {{theword}} </span>
-            <br> Previous Turns: 
-            <br><span id="lastword"></span>
+            <br>
+            <br> Previous Turns: <span id="lastword"></span>
+            <br> 
+            <br> Last Move: <span id="lastmove">{{lastmove}}</span>
             <br> 
             <p id="wordlist"> </p>
             <br>
@@ -63,7 +72,7 @@
             <br>
             <br>
             <br>
-            <input id="refresh" type="button" value="Refresh" class="btn btn-primary"}}>
+            <br>
             <span id="gameid" >{{ gameid }}</span>
         </div>
         <script src= "https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -129,7 +138,7 @@
                    	document.getElementById("P2_score").innerHTML = P2_score; 
                     $.ajax({
                         url: '/keepscore',
-                        data: JSON.stringify({'Player': "P1", 'scoreData': P1_score, 'gameData':document.getElementById("gameid").innerHTML}),
+                        data: JSON.stringify({'playerData':"{{yourname}}", 'Player': "P1", 'scoreData': P1_score, 'gameData':document.getElementById("gameid").innerHTML}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
@@ -145,7 +154,7 @@
                		document.getElementById("P1_score").innerHTML = P1_score; 
                     $.ajax({
                         url: '/keepscore',
-                        data: JSON.stringify({'Player': "P2", 'scoreData': P2_score, 'gameData':document.getElementById("gameid").innerHTML}),
+                        data: JSON.stringify({'playerData':"{{yourname}}", 'Player': "P2", 'scoreData': P2_score, 'gameData':document.getElementById("gameid").innerHTML}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
@@ -170,7 +179,7 @@
             	//alert("got here")
                 $.ajax({
                     url: '/playmove',
-                    data: JSON.stringify({'moveData':x, 'letterData': theletter.value, 'wordData':"{{theword}}", 'gameData':document.getElementById("gameid").innerHTML}),
+                    data: JSON.stringify({'playerData':"{{yourname}}", 'moveData':x, 'letterData': theletter.value, 'wordData':"{{theword}}", 'gameData':document.getElementById("gameid").innerHTML}),
                     type: 'POST',
                     contentType: 'application/json;charset=UTF-8',
                     processData: false, 
@@ -256,7 +265,7 @@
             document.getElementById("reset").addEventListener('click', function(){
                     $.ajax({
                         url: '/refresh',
-                        data: JSON.stringify({'gameData':document.getElementById("gameid").innerHTML}),
+                        data: JSON.stringify({'playerData':"{{yourname}}", 'gameData':document.getElementById("gameid").innerHTML}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
