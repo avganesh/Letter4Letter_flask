@@ -63,7 +63,7 @@
             document.getElementById("CreateNew").addEventListener('click', function(){
                     $.ajax({
                         url: '/newgame',
-                        //data: JSON.stringify({'nameData': document.getElementById("newName").value}),
+                        data: JSON.stringify({'test': "test"}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
@@ -80,7 +80,7 @@
             document.getElementById("JoinExistingP1").addEventListener('click', function(){
                     $.ajax({
                         url: '/joingame',
-                        data: JSON.stringify({'playerData':"P1" 'nameData': document.getElementById("joinNameP1").value, 'gameData':document.getElementById("gameidP1").value}),
+                        data: JSON.stringify({'playerData':"P1", 'nameData': document.getElementById("joinNameP1").value, 'gameData':document.getElementById("gameidP1").value}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
@@ -96,7 +96,7 @@
             document.getElementById("JoinExistingP2").addEventListener('click', function(){
                     $.ajax({
                         url: '/joingame',
-                        data: JSON.stringify({'Player':"P2" 'nameData': document.getElementById("joinNameP2").value, 'gameData':document.getElementById("gameidP2").value}),
+                        data: JSON.stringify({'Player':"P2", 'nameData': document.getElementById("joinNameP2").value, 'gameData':document.getElementById("gameidP2").value}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
