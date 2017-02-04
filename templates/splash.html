@@ -96,7 +96,7 @@
             document.getElementById("JoinExistingP2").addEventListener('click', function(){
                     $.ajax({
                         url: '/joingame',
-                        data: JSON.stringify({'Player':"P2", 'nameData': document.getElementById("joinNameP2").value, 'gameData':document.getElementById("gameidP2").value}),
+                        data: JSON.stringify({'playerData':"P2", 'nameData': document.getElementById("joinNameP2").value, 'gameData':document.getElementById("gameidP2").value}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
