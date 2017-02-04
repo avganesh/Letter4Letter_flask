@@ -44,7 +44,7 @@ def splash():
 @app.route('/newgame', methods=['GET', 'POST'])
 def newgame():
     if request.method == 'POST':
-        response = str(uuid.uuid4)
+        response = str(uuid.uuid4())
         reg = l4l_games(response)
         db.session.add(reg)
         db.session.commit()
