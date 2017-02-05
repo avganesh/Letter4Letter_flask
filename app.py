@@ -13,12 +13,12 @@ class l4l_games(db.Model):
     __tablename__ = "l4l_games"
     #id = db.Column(db.Integer, primary_key=True)
     gameid = db.Column(db.String(120), primary_key=True, unique=True)#, default=uuid.uuid4)
-    P1name = db.Column(db.String(120), unique=False)
-    P2name = db.Column(db.String(120), unique=False)
-    wordgamestate = db.Column(db.String(120), unique=False)
-    lastmove = db.Column(db.String(120), unique=False)
-    P1score = db.Column(db.Integer, unique=False)
-    P2score = db.Column(db.Integer, unique=False)
+    P1name = db.Column(db.String(120), unique=False, default="")
+    P2name = db.Column(db.String(120), unique=False, default="")
+    wordgamestate = db.Column(db.String(120), unique=False, default="")
+    lastmove = db.Column(db.String(120), unique=False, default="")
+    P1score = db.Column(db.Integer, unique=False, default=0)
+    P2score = db.Column(db.Integer, unique=False, default=0)
 
     def __init__(self, gameid):
         self.gameid = gameid
@@ -31,13 +31,13 @@ def isword(word):
         response = True
     else:
         response = False
-    return print(response)
+    return str(response)
 
 def scoreupdate(player, gameID):
     game = db.session.query(l4l_games).filter_by(gameid=gameID).first()
-    if (player == P1name):
+    if (player == game.P1name):
         game.P2score = game.P2score + 1
-    elif (player == P2name): 
+    elif (player == game.P2name): 
         game.P1score = game.P1score + 1
     db.session.commit() 
     return print('GAME OVER')
@@ -65,12 +65,12 @@ def newgame():
         reg = l4l_games(response)
         db.session.add(reg)
         db.session.commit()
-        game = db.session.query(l4l_games).filter_by(gameid=response).first()
-        game.P1score = 0
-        game.P2score = 0
-        game.wordgamestate = ""
-        game.lastmove = ""
-        db.session.commit()
+        #game = db.session.query(l4l_games).filter_by(gameid=response).first()
+        #game.P1score = 0
+        #game.P2score = 0
+        #game.wordgamestate = ""
+        #game.lastmove = ""
+        #db.session.commit()
     return response
 
 @app.route('/joingame', methods=['GET', 'POST'])
