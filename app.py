@@ -115,7 +115,7 @@ def playmove():
             return scoreupdate(name, gameid)
         else:
             game = l4l_games.query.filter_by(gameid=gameid).first()
-            message = "Hmm... interesting move "+ name + "... now press refresh to see your opponent's move."  
+            message = "Hmm... interesting move "+ name + "... now wait to see your opponent's move."  
             return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(currentword), yourname=name, message=message)
 
 
@@ -126,7 +126,7 @@ def refresh():
         name = request.json['playerData']
         game = l4l_games.query.filter_by(gameid=gameid).first()
         if (game.lastmove == name):
-            message = "Still waiting for opponent's move, press Refresh again after a while..."
+            message = "Still waiting for opponent's move, wait a while longer..."
         else:
             message = "Enter a letter to play."
     return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(game.wordgamestate), yourname=name, message=message)
