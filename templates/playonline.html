@@ -55,7 +55,6 @@
             <br>
             <br> Current Turn: <span id="theword"> {{theword}} </span>
             <br>
- <!--           <br> Previous Turns: <span id="lastword"></span> -->
             <br> 
             <br> Last Move: <span id="lastmove">{{lastmove}}</span>
             <br> 
@@ -117,6 +116,7 @@
                     playmove("left")
                 };
             }
+
             function addright(){
                 if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z' || "{{yourname}}" == "{{lastmove}}"){
                     issueAlert();
@@ -132,6 +132,7 @@
 //            		//alert(!(wordlist.indexOf(x) == -1 || x.length < 4))
 //                	return !(wordlist.indexOf(x) == -1 || x.length < 4)
 //            };
+
 //            function gameover(x){
 //            	if (x) {
 //            		P2_score += 1 
@@ -190,21 +191,25 @@
                         console.log(error);
                     }
                 });
-                lastword.push(theword+"\r\n");
-                document.getElementById("lastword").innerHTML = lastword; 
-                document.getElementById("theword").innerHTML = theword;
-  //          	if(!isword(theword)){
-  //                  document.getElementById("Message").innerHTML = "Hmm... interesting move. Now Player "+ ((round % 2)+1) +", enter a letter."
-  //                  nextround()
-  //              } else {
-  //                 	gameover(round % 2 == 1)
-  //              //round = 0  
-  //              }
-  //              showChallenge();
-  //          };
+            };
+
+                // lastword.push(theword+"\r\n");
+                // document.getElementById("lastword").innerHTML = lastword; 
+                // document.getElementById("theword").innerHTML = theword;
+
+           // 	if(!isword(theword)){
+           //         document.getElementById("Message").innerHTML = "Hmm... interesting move. Now Player "+ ((round % 2)+1) +", enter a letter."
+           //         nextround()
+           //     } else {
+           //        	gameover(round % 2 == 1)
+           //     //round = 0  
+           //     }
+           //     showChallenge();
+           // 
             
+
             function issueAlert(){
-                alert("Please enter a single lowercase letter only.");
+                alert("Please enter a single lowercase letter only. You can only enter letters during your turn.");
             };
             
             function showChallenge(){
