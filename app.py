@@ -113,7 +113,7 @@ def playmove():
         game.lastmove = name
         db.session.commit()
         if (isword(currentword)):
-            return score_update(name, gameid)
+            return scoreupdate(name, gameid)
         else:
             game = l4l_games.query.filter_by(gameid=gameid).first()
             message = "Hmm... interesting move "+ name + "... now press refresh to see your opponent's move."  
