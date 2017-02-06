@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_heroku import Heroku
 import uuid
-import io
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/pre-registration'
@@ -28,7 +27,7 @@ class l4l_games(db.Model):
         return '<gameid %r>' % self.gameid
 
 def isword(word):
-    if (len(word)>3 and (word in io.open('static/UKACD17.TXT', encoding='latin_1').read())):
+    if (len(word)>3 and (word in open('static/UKACD17.TXT', encoding='latin_1').read())):
         response = True
     else:
         response = False
