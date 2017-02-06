@@ -27,6 +27,7 @@ class l4l_games(db.Model):
         return '<gameid %r>' % self.gameid
 
 def isword(word):
+    word = word + '\n' 
     if (len(word)>3 and (word in open('static/UKACD17.TXT', encoding='latin_1').read())):
         response = True
     else:
