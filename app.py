@@ -27,21 +27,21 @@ class l4l_games(db.Model):
         return '<gameid %r>' % self.gameid
 
 def isword(word):
-    if (len(word)>3 and(word in open('static/UKACD17.TXT').read())):
+    if (len(word)>3 and (word in open('static/UKACD17.TXT').read())):
         response = True
     else:
         response = False
     return str(response)
 
-def scoreupdate(player, gameID):
+def scoreupdate(name, gameID):
     game = db.session.query(l4l_games).filter_by(gameid=gameID).first()
-    if (player == game.P1name):
+    if (name == game.P1name):
         game.P2score = game.P2score + 1
-        game.lastmove = player
+        game.lastmove = name
         message = game.P2name + " wins!! and gets to start this game."
-    elif (player == game.P2name): 
+    elif (name == game.P2name): 
         game.P1score = game.P1score + 1
-        game.lastmove = player
+        game.lastmove = name
         message = game.P1name + " wins!! and gets to start this game."
     game.wordgamestate = ""
     db.session.commit()
