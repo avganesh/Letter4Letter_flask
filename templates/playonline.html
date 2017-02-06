@@ -28,9 +28,8 @@
             <h4>Instructions to play the game: </h4>
             <br> First, a player enters a letter, and
             <br> clicks Right or Left to submit. 
-            <br> Then, the next player clicks refresh 
-            <br> to see their entry and enters a letter.
-            <br> Click Right or Left to submit.
+            <br> Then, the next player enters a letter, and 
+            <br> clicks Right or Left to submit.
             <br> Then the first player enters a letter again
             <br> and so on...
             <!-- <br> Use Challenge when you think your opponent is making up a word that doesn't exist.  -->
@@ -39,7 +38,7 @@
 
             </p>
             <br>
-            <input id="refresh" type="button" value="Refresh" class="btn btn-primary">
+            <!-- <input id="refresh" type="button" value="Refresh" class="btn btn-primary"> -->
             <br>
         
             Round: <span id="Round">{{roundnum}}</span>
@@ -176,8 +175,9 @@
             	location.reload()
             });
 
-            //on refresh button click
-            document.getElementById("refresh").addEventListener('click', function(){
+
+            //refresh on settimeout intervals 
+            (function refresh(){
                     $.ajax({
                         url: '/refresh',
                         data: JSON.stringify({'playerData':"{{yourname}}", 'gameData':document.getElementById("gameid").innerHTML}),
@@ -191,7 +191,25 @@
                             console.log(error);
                         }
                     });
-            });
+                   setTimeout(refresh, 5000);
+            }());
+
+            //on refresh button click
+            // document.getElementById("refresh").addEventListener('click', function(){
+            //         $.ajax({
+            //             url: '/refresh',
+            //             data: JSON.stringify({'playerData':"{{yourname}}", 'gameData':document.getElementById("gameid").innerHTML}),
+            //             type: 'POST',
+            //             contentType: 'application/json;charset=UTF-8',
+            //             processData: false, 
+            //             success: function(response) {
+            //                 $("body").html(response);
+            //             },
+            //             error: function(error) {
+            //                 console.log(error);
+            //             }
+            //         });
+            // });
 
         </script>
         <script src="{{ url_for('static',filename='js/plugins.js') }}"></script>
