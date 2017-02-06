@@ -31,7 +31,7 @@ def isword(word):
         response = True
     else:
         response = False
-    return str(response)
+    return response
 
 def scoreupdate(name, gameID):
     game = db.session.query(l4l_games).filter_by(gameid=gameID).first()
