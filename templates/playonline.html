@@ -77,26 +77,13 @@
         <script src= "https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
             //set vars 
-//            var lastword = new Array()
             var theword = "{{theword}}"
             var theletter = document.getElementById("theletter")           
             var wordlist = new Object();
             var round = 1;
             var P1_score = document.getElementById("P1_score");
             var P2_score = document.getElementById("P2_score");
-            //document.getElementById("P1_score").innerHTML = 0
-            //document.getElementById("P2_score").innerHTML = 0
 
-            //Access list of words data 
-            //function getwords(){ 
-//            	$.get("{{ url_for('static',filename='UKACD17.TXT') }}", function(data){
-//                	 wordlist = data.split("\r\n");
-//            	})
-            //}
-            //document.getElementById("wordlist").innerHTML = Array.isArray(wordlist)
-            //wordlist = getwords()
-            //document.getElementById("wordlist").innerHTML = Array.isArray(wordlist)
-            //document.getElementById("wordlist").innerHTML = stringData;
             
             //create functions 
             function nextround(){
@@ -109,10 +96,6 @@
                 if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z' || "{{yourname}}" == "{{lastmove}}"){
                     issueAlert();
                 } else {
-                    //theword = theletter.value + theword;
-                    //lastword.push(theword+"\r\n");
-                    //document.getElementById("lastword").innerHTML = lastword;
-                    //document.getElementById("theword").innerHTML = theword;
                     playmove("left")
                 };
             }
@@ -121,60 +104,10 @@
                 if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z' || "{{yourname}}" == "{{lastmove}}"){
                     issueAlert();
                 }   else {
-                    //theword = theword + theletter.value;
-                    //lastword.push(theword+"\r\n");
-                    //document.getElementById("lastword").innerHTML = lastword; 
-                    //document.getElementById("theword").innerHTML = theword;
                     playmove("right")
                 };
             }
-//            function isword(x){
-//            		//alert(!(wordlist.indexOf(x) == -1 || x.length < 4))
-//                	return !(wordlist.indexOf(x) == -1 || x.length < 4)
-//            };
 
-//            function gameover(x){
-//            	if (x) {
-//            		P2_score += 1 
-//                   	document.getElementById("P2_score").innerHTML = P2_score; 
-//                    $.ajax({
-//                        url: '/keepscore',
-//                        data: JSON.stringify({'playerData':"{{yourname}}", 'Player': "P1", 'scoreData': P1_score, 'gameData':document.getElementById("gameid").innerHTML}),
-//                        type: 'POST',
-//                        contentType: 'application/json;charset=UTF-8',
-//                        processData: false, 
-//                        success: function(response) {
-//                            $("body").html(response);
-//                       },
-//                        error: function(error) {
-//                            console.log(error);
-//                        }
-//                    });
-//               	} else {
-//               		P1_score += 1 
-//              		document.getElementById("P1_score").innerHTML = P1_score; 
-//                    $.ajax({
-//                        url: '/keepscore',
-//                        data: JSON.stringify({'playerData':"{{yourname}}", 'Player': "P2", 'scoreData': P2_score, 'gameData':document.getElementById("gameid").innerHTML}),
-//                        type: 'POST',
-//                        contentType: 'application/json;charset=UTF-8',
-//                        processData: false, 
-//                        success: function(response) {
-//                            $("body").html(response);
-//                        },
-//                        error: function(error) {
-//                            console.log(error);
-//                        }
-//                    });
-//                } 
-//
-//                document.getElementById("Message").innerHTML = "Game Over. Play Again. Your move Player "+ ((round % 2)+1)
-//                nextround()
-//                theword = ""
-//                document.getElementById("theword").innerHTML = ""
-//                document.getElementById("challengetext").value = ""
-//                showChallenge()
-//            }; 
 
             function playmove(x){
             	//alert("got here")
@@ -192,20 +125,6 @@
                     }
                 });
             };
-
-                // lastword.push(theword+"\r\n");
-                // document.getElementById("lastword").innerHTML = lastword; 
-                // document.getElementById("theword").innerHTML = theword;
-
-           // 	if(!isword(theword)){
-           //         document.getElementById("Message").innerHTML = "Hmm... interesting move. Now Player "+ ((round % 2)+1) +", enter a letter."
-           //         nextround()
-           //     } else {
-           //        	gameover(round % 2 == 1)
-           //     //round = 0  
-           //     }
-           //     showChallenge();
-           // 
             
 
             function issueAlert(){
@@ -230,15 +149,6 @@
                 addright();
             });
 
-            // // on left swipe 
-            // $("span").on("swipeleft", function(){
-            //     addleft();  
-            // });
-            
-            // //on right swipe  
-            // $("span").on("swiperight", function(){
-            //     addright();
-            // });
 
             //on challenge button click 
             document.getElementById("challenge").addEventListener('click', function(){
