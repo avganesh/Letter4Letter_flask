@@ -37,10 +37,16 @@ def scoreupdate(player, gameID):
     game = db.session.query(l4l_games).filter_by(gameid=gameID).first()
     if (player == game.P1name):
         game.P2score = game.P2score + 1
+        game.lastmove = player
+        message = game.P2name + " wins!! and gets to start this game."
     elif (player == game.P2name): 
         game.P1score = game.P1score + 1
-    db.session.commit() 
-    return print('GAME OVER')
+        game.lastmove = player
+        message = game.P1name + " wins!! and gets to start this game."
+    game.wordgamestate = ""
+    db.session.commit()
+    game = l4l_games.query.filter_by(gameid=gameID).first()
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=0, yourname=name, message=message)
     
 # Set "homepage" to index.html
 @app.route('/')
@@ -79,6 +85,7 @@ def joingame():
         name = request.json['nameData']
         gameid = request.json['gameData']
         player = request.json['playerData']
+        message = "Enter a letter to start playing"
         game = db.session.query(l4l_games).filter_by(gameid=gameid).first()
         if player == "P1":
             game.P1name = name
@@ -86,7 +93,7 @@ def joingame():
             game.P2name = name
         db.session.commit()
         game = l4l_games.query.filter_by(gameid=gameid).first()
-    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=0, yourname=name)
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=0, yourname=name, message=message)
 
 
 @app.route('/playmove', methods=['GET', 'POST'])
@@ -106,9 +113,11 @@ def playmove():
         game.lastmove = name
         db.session.commit()
         if (isword(currentword)):
-            score_update(name, gameid)
-        game = l4l_games.query.filter_by(gameid=gameid).first()
-    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(currentword), yourname=name)
+            return score_update(name, gameid)
+        else:
+            game = l4l_games.query.filter_by(gameid=gameid).first()
+            message = "Hmm... interesting move "+ name + "... now press refresh to see your opponent's move."  
+            return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(currentword), yourname=name, message=message)
 
 #@app.route('/keepscore', methods=['GET', 'POST'])
 #def keepscore():
@@ -131,7 +140,11 @@ def refresh():
         gameid = request.json['gameData']
         name = request.json['playerData']
         game = l4l_games.query.filter_by(gameid=gameid).first()
-    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(game.wordgamestate), yourname=name)
+        if (game.lastmove == name):
+            message = "Still waiting for opponent's move, press Refresh again after a while..."
+        else:
+            message = "Enter a letter to play."
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(game.wordgamestate), yourname=name, message=message)
 
 if __name__ == '__main__':
     app.debug = True

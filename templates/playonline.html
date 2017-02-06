@@ -25,13 +25,13 @@
         <h1>Letter 4 Letter Web App</h1>
         <div class="container-fluid" >
             <p id="Instructions"> 
-            <h4>Here's how you play the game: </h4>
-            <br> First a player enters a letter
-            <br> Click Right or Left to submit 
-            <br> Then the next player enters a letter 
-            <br> Click refresh to see their entry
+            <h4>Instructions to play the game: </h4>
+            <br> First, a player enters a letter, and
+            <br> clicks Right or Left to submit. 
+            <br> Then, the next player clicks refresh 
+            <br> to see their entry and enters a letter.
+            <br> Click Right or Left to submit.
             <br> Then the first player enters a letter again
-            <br> Click Right or Left to submit
             <br> and so on...
             <!-- <br> Use Challenge when you think your opponent is making up a word that doesn't exist.  -->
             <br>
@@ -46,7 +46,7 @@
             <br>
             Player: <span id="yourname">{{yourname}}</span>
             <br>
-            <p id="Message">Enter a letter to start playing</p>
+            <p id="Message">{{message}}</p>
             <form class="form-inline">
                 <input id="theletter" type="text" class="form-control">
                 <input id="leftbutton" type="button" value="Left" class="btn btn-primary">
