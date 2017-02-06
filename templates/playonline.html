@@ -177,7 +177,7 @@
 
 
             //refresh on settimeout intervals 
-            (function refresh(){
+            var refresh = function(){
                     $.ajax({
                         url: '/refresh',
                         data: JSON.stringify({'playerData':"{{yourname}}", 'gameData':document.getElementById("gameid").innerHTML}),
@@ -190,9 +190,9 @@
                         error: function(error) {
                             console.log(error);
                         }
-                    });
-                   setTimeout(refresh, 5000);
-            }());
+                    });     
+            };
+            setTimeout(refresh, 5000);
 
             //on refresh button click
             // document.getElementById("refresh").addEventListener('click', function(){
