@@ -66,7 +66,7 @@ def splash():
     if request.method == 'GET':
         return render_template('splash.html')
 
-@app.route('/favicon.ico')
+##@app.route('/favicon.ico')
 ##def favicon():
 ##    return flask.redirect(flask.url_for('static', filename='favicon.ico', code=301))
 ##    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
