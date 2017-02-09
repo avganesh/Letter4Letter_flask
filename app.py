@@ -49,7 +49,7 @@ def scoreupdate(name, gameID):
         game.P1score = game.P1score + 1
         game.lastmove = name
         message = game.P1name + " wins!! and gets to start this game."
-    game.gameoverwords = game.wordgamestate + " " game.gameoverwords
+    game.gameoverwords = game.wordgamestate + " " + game.gameoverwords
     game.wordgamestate = ""
     db.session.commit()
     game = l4l_games.query.filter_by(gameid=gameID).first()
