@@ -41,26 +41,26 @@
             <!-- <input id="refresh" type="button" value="Refresh" class="btn btn-primary"> -->
             <br>
         
-            Round: <span id="Round">{{roundnum}}</span>
+            Round: <span id="roundnum">{{roundnum}}</span>
             <br>
             Player: <span id="yourname">{{yourname}}</span>
             <br>
-            <p id="Message">{{message}}</p>
+            <p id="message">{{message}}</p>
             <form class="form-inline">
                 <input id="theletter" type="text" class="form-control">
                 <input id="leftbutton" type="button" value="Left" class="btn btn-primary">
                 <input id="rightbutton" type="button" value="Right" class="btn btn-primary">
             </form>
             <br>
-            <br> Current Turn: <span id="theword"> {{theword}} </span>
+            <br><p style="font-size:50px"> <span id="theword"> {{theword}} </span> </p>
             <br>
             <br> 
-            <br> Last Move: <span id="lastmove">{{lastmove}}</span>
+            <br> Last move: <span id="lastmove">{{lastmove}}</span>
             <br> 
-            <p id="wordlist"> </p>
+            <br> Game Over Words: <span id="lastmove">{{gameoverwords}}</span>
             <br>
             <form class="form-inline">
-                <input id="challenge" type="hidden" value="Challenge" class="btn btn-danger" disabled="disabled"> 
+                <input id="challenge" type="hidden" value="Challenge" class="btn btn-danger"> 
                 <input id="challengetext" type="hidden" class="form-control">
             </form>
             <br> {{ Player1 }} score: <span id="P1_score">{{ P1score }}</span>
@@ -75,22 +75,7 @@
         </div>
         <script src= "https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
-            //set vars 
-            var theword = "{{theword}}"
-            var theletter = document.getElementById("theletter")           
-            var wordlist = new Object();
-            var round = 1;
-            var P1_score = document.getElementById("P1_score");
-            var P2_score = document.getElementById("P2_score");
-
             
-            //create functions 
-            function nextround(){
-            	round += 1 
-            	document.getElementById("Round").innerHTML = round
-            	theletter.value = ""
-            }
-
             function addleft(){
                 if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z' || "{{yourname}}" == "{{lastmove}}"){
                     issueAlert();
@@ -117,7 +102,15 @@
                     contentType: 'application/json;charset=UTF-8',
                     processData: false, 
                     success: function(response) {
-                        $("body").html(response);
+                        var JSONObject = JSON.parse(response);
+                        //$("body").html(response);
+                        $(roundnum).html(JSONObject[0]);
+                        $(message).html(JSONObject[1]);
+                        $(theword).html(JSONObject[2]);
+                        $(lastmove).html(JSONObject[3]);
+                        $(gameoverwords).html(JSONObject[4]);
+                        $(P1_score).html(JSONObject[5]);
+                        $(P2_score).html(JSONObject[6]);
                     },
                     error: function(error) {
                         console.log(error);
@@ -185,7 +178,15 @@
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
                         success: function(response) {
-                            $("body").html(response);
+                            var JSONObject = JSON.parse(response);
+                            //$("body").html(response);
+                            $(roundnum).html(JSONObject[0]);
+                            $(message).html(JSONObject[1]);
+                            $(theword).html(JSONObject[2]);
+                            $(lastmove).html(JSONObject[3]);
+                            $(gameoverwords).html(JSONObject[4]);
+                            $(P1_score).html(JSONObject[5]);
+                            $(P2_score).html(JSONObject[6]);
                         },
                         error: function(error) {
                             console.log(error);

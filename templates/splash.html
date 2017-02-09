@@ -33,19 +33,12 @@
             <br>
 
             <form class="form-inline" method="POST" id="P1form">
-                <label> Player 1: </label>
-                <input placeholder="Enter your name" id="joinNameP1">
-                <input placeholder="Enter the Game ID" id="gameidP1">
-                <span><button class="btn btn-lg btn-success" type="button" id="JoinExistingP1">Join as P1</button></span>
+                <input placeholder="Enter your name" id="joinName">
+                <input placeholder="Enter the Game ID" id="gameid">
+                <span><button class="btn btn-lg btn-success" type="button" id="JoinExisting">Join Game</button></span>
             </form>
             <br>
             <br>
-            <form class="form-inline" method="POST" id="P2form">
-                <label> Player 2: </label>
-                <input placeholder="Enter your name" id="joinNameP2">
-                <input placeholder="Enter the Game ID" id="gameidP2">
-                <span><button class="btn btn-lg btn-success" type="button" id="JoinExistingP2">Join as P2</button></span>
-            </form>
             <br>
             <br>
             <br>
@@ -79,10 +72,10 @@
                     });;
             });
         //On Join Existing P1 Button click
-            document.getElementById("JoinExistingP1").addEventListener('click', function(){
+            document.getElementById("JoinExisting").addEventListener('click', function(){
                     $.ajax({
                         url: '/joingame',
-                        data: JSON.stringify({'playerData':"P1", 'nameData': document.getElementById("joinNameP1").value, 'gameData':document.getElementById("gameidP1").value}),
+                        data: JSON.stringify({'nameData': document.getElementById("joinName").value, 'gameData':document.getElementById("gameid").value}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
@@ -94,22 +87,7 @@
                         }
                     });;
             });
-        //On Join Existing P2 Button click
-            document.getElementById("JoinExistingP2").addEventListener('click', function(){
-                    $.ajax({
-                        url: '/joingame',
-                        data: JSON.stringify({'playerData':"P2", 'nameData': document.getElementById("joinNameP2").value, 'gameData':document.getElementById("gameidP2").value}),
-                        type: 'POST',
-                        contentType: 'application/json;charset=UTF-8',
-                        processData: false, 
-                        success: function(response) {
-                            $("body").html(response);
-                        },
-                        error: function(error) {
-                            console.log(error);
-                        }
-                    });;
-            });
+
         </script>    
         <script src="{{ url_for('static',filename='js/plugins.js') }}"></script>
         <script src="{{ url_for('static',filename='js/main.js') }}"></script>

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_heroku import Heroku
 import uuid
+import json
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/pre-registration'
@@ -13,13 +14,13 @@ class l4l_games(db.Model):
     __tablename__ = "l4l_games"
     #id = db.Column(db.Integer, primary_key=True)
     gameid = db.Column(db.String(120), primary_key=True, unique=True)#, default=uuid.uuid4)
-##    email = db.Column(db.String(120), unique=False, default="")
-##    timestamp = db.Column(db.String(120), unique=False, default="")
+    email = db.Column(db.String(120), unique=False, default="")
+    timestamp = db.Column(db.String(120), unique=False, default="")
     P1name = db.Column(db.String(120), unique=False, default="")
     P2name = db.Column(db.String(120), unique=False, default="")
     wordgamestate = db.Column(db.String(120), unique=False, default="")
     lastmove = db.Column(db.String(120), unique=False, default="")
-##    oldwords = db.Column(db.String(720), unique=False, default="")
+    gameoverwords = db.Column(db.String(720), unique=False, default="")
     P1score = db.Column(db.Integer, unique=False, default=0)
     P2score = db.Column(db.Integer, unique=False, default=0)
 
@@ -48,10 +49,12 @@ def scoreupdate(name, gameID):
         game.P1score = game.P1score + 1
         game.lastmove = name
         message = game.P1name + " wins!! and gets to start this game."
+    game.gameoverwords = game.wordgamestate + " " game.gameoverwords
     game.wordgamestate = ""
     db.session.commit()
     game = l4l_games.query.filter_by(gameid=gameID).first()
-    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=0, yourname=name, message=message)
+    return json.dumps([0, message, game.wordgamestate, game.lastmove, game.gameoverwords, game.P1score, game.P2score])
+##    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=0, yourname=name, message=message)
     
 # Set "homepage" to index.html
 @app.route('/')
@@ -63,10 +66,10 @@ def splash():
     if request.method == 'GET':
         return render_template('splash.html')
 
-##@app.route('/favicon.ico')
-##def favicon():
+@app.route('/favicon.ico')
+def favicon():
 ##    return flask.redirect(flask.url_for('static', filename='favicon.ico', code=301))
-##    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 # Save e-mail to database and send to success page
 @app.route('/newgame', methods=['GET', 'POST'])
@@ -83,16 +86,19 @@ def joingame():
     if request.method == 'POST':
         name = request.json['nameData']
         gameid = request.json['gameData']
-        player = request.json['playerData']
         message = "Enter a letter to start playing"
         game = db.session.query(l4l_games).filter_by(gameid=gameid).first()
-        if player == "P1":
+        if game.P1name == "":
             game.P1name = name
-        elif player == "P2":
+        elif game.P2name == "":
             game.P2name = name
+        elif game.P1name == name:
+            print("welcome back")
+        elif game.P2name == name:
+            print("welcome back")
         db.session.commit()
         game = l4l_games.query.filter_by(gameid=gameid).first()
-    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=0, yourname=name, message=message)
+    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(game.wordgamestate), yourname=name, message=message, gameoverwords=game.gameoverwords)
 
 
 @app.route('/playmove', methods=['GET', 'POST'])
@@ -116,8 +122,9 @@ def playmove():
         else:
             game = l4l_games.query.filter_by(gameid=gameid).first()
             message = "Hmm... interesting move "+ name + "... now wait to see your opponent's move."  
-            return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(currentword), yourname=name, message=message)
-
+            return json.dumps([len(currentword), message, game.wordgamestate, game.lastmove, game.gameoverwords, game.P1score, game.P2score])
+##            return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(currentword), yourname=name, message=message)
+            
 
 @app.route('/refresh', methods=['GET', 'POST'])
 def refresh():
@@ -129,7 +136,8 @@ def refresh():
             message = "Still waiting for opponent's move, wait a while longer..."
         else:
             message = "Enter a letter to play."
-    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(game.wordgamestate), yourname=name, message=message)
+    return json.dumps([len(game.wordgamestate), message, game.wordgamestate, game.lastmove, game.gameoverwords, game.P1score, game.P2score])
+##    return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(game.wordgamestate), yourname=name, message=message)
 
 if __name__ == '__main__':
     app.debug = True
