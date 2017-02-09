@@ -67,9 +67,9 @@ def splash():
         return render_template('splash.html')
 
 @app.route('/favicon.ico')
-def favicon():
+##def favicon():
 ##    return flask.redirect(flask.url_for('static', filename='favicon.ico', code=301))
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
+##    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico')
 
 # Save e-mail to database and send to success page
 @app.route('/newgame', methods=['GET', 'POST'])
