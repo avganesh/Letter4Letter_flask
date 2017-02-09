@@ -34,7 +34,7 @@
 
             <form class="form-inline" method="POST" id="P1form">
                 <input placeholder="Enter your name" id="joinName">
-                <input placeholder="Enter the Game ID" id="gameid">
+                <input placeholder="Enter the Game ID" id="gameidP">
                 <span><button class="btn btn-lg btn-success" type="button" id="JoinExisting">Join Game</button></span>
             </form>
             <br>
@@ -75,7 +75,7 @@
             document.getElementById("JoinExisting").addEventListener('click', function(){
                     $.ajax({
                         url: '/joingame',
-                        data: JSON.stringify({'nameData': document.getElementById("joinName").value, 'gameData':document.getElementById("gameid").value}),
+                        data: JSON.stringify({'nameData': document.getElementById("joinName").value, 'gameData':document.getElementById("gameidP").value}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
