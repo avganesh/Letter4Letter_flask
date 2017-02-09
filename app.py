@@ -132,7 +132,15 @@ def playmove():
             message = "Hmm... interesting move "+ name + "... now wait to see your opponent's move."  
             return json.dumps([len(currentword), message, game.wordgamestate, game.lastmove, game.gameoverwords, game.P1score, game.P2score])
 ##            return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(currentword), yourname=name, message=message)
-            
+
+
+@app.route('/challenge', methods=['GET', 'POST'])
+def challenge():
+    if request.method == 'POST':
+        currentword = request.json['wordData']
+        gameid = request.json['gameData']
+        name = request.json['playerData']
+    pass
 
 @app.route('/refresh', methods=['GET', 'POST'])
 def refresh():

@@ -52,7 +52,7 @@
                 <input id="rightbutton" type="button" value="Right" class="btn btn-primary">
             </form>
             <br>
-            <br><p style="font-size:50px"> <span id="thewordid"> {{theword}} </span> </p>
+            <br><p style="font-size:50px"> <span id="thewordid">{{theword}}</span> </p>
             <br>
             <br> 
             <br> Last move: <span id="lastmove">{{lastmove}}</span>
@@ -82,6 +82,7 @@
                     issueAlert();
                 } else {
                     playmove("left")
+                    theletter.value = ""
                 };
             }
 
@@ -90,6 +91,7 @@
                     issueAlert();
                 }   else {
                     playmove("right")
+                    theletter.value=""
                 };
             }
 
@@ -145,16 +147,32 @@
 
             //on challenge button click 
             document.getElementById("challenge").addEventListener('click', function(){
-                if (document.getElementById("challenge").value == "Challenge"){
-                	document.getElementById("challengetext").type = "Text"
-                	document.getElementById("challenge").value = "Challenge Accepted"
-                	//alert("gothere")
-                	document.getElementById("Message").innerHTML = "Now Player Enter your word."
-            	} else {
-            		document.getElementById("challenge").value = "Challenge"
-            		document.getElementById("challengetext").type = "hidden"	
-            	}
+                $.ajax({
+                    url: '/challenge',
+                    data: JSON.stringify({'playerData':"{{yourname}}", 'wordData':document.getElementById("thewordid").innerHTML, 'gameData':document.getElementById("gameid").innerHTML}),
+                    type: 'POST',
+                    contentType: 'application/json;charset=UTF-8',
+                    processData: false, 
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
             });
+
+
+            //     if (document.getElementById("challenge").value == "Challenge"){
+            //     	document.getElementById("challengetext").type = "Text"
+            //     	document.getElementById("challenge").value = "Challenge Accepted"
+            //     	//alert("gothere")
+            //     	document.getElementById("Message").innerHTML = "Now Player Enter your word."
+            // 	} else {
+            // 		document.getElementById("challenge").value = "Challenge"
+            // 		document.getElementById("challengetext").type = "hidden"	
+            // 	}
+            // });
 
             //on reset button click 
             document.getElementById("reset").addEventListener('click', function(){
@@ -185,6 +203,7 @@
                             console.log(error);
                         }
                     });
+            showChallenge()
             setTimeout(refresh, 10000);     
             };
             setTimeout(refresh, 10000);
