@@ -69,8 +69,6 @@
             <input id="reset" type="button" value="Reset" class="btn btn-warning">
             <br>
             <br>
-            <br>
-            <br>
             <span id="gameid" >{{ gameid }}</span>
         </div>
         <script src= "https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -80,7 +78,7 @@
             var theword = document.getElementById("theword").innerHTML;
 
             function addleft(){
-                if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z' || "{{yourname}}" == "{{lastmove}}"){
+                if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z' || "{{yourname}}" == document.getElementById("lastmove").innerHTML){
                     issueAlert();
                 } else {
                     playmove("left")
@@ -88,7 +86,7 @@
             }
 
             function addright(){
-                if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z' || "{{yourname}}" == "{{lastmove}}"){
+                if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z' || "{{yourname}}" == document.getElementById("lastmove").innerHTML){
                     issueAlert();
                 }   else {
                     playmove("right")
@@ -190,22 +188,6 @@
             };
             setTimeout(refresh, 10000);
 
-            //on refresh button click
-            // document.getElementById("refresh").addEventListener('click', function(){
-            //         $.ajax({
-            //             url: '/refresh',
-            //             data: JSON.stringify({'playerData':"{{yourname}}", 'gameData':document.getElementById("gameid").innerHTML}),
-            //             type: 'POST',
-            //             contentType: 'application/json;charset=UTF-8',
-            //             processData: false, 
-            //             success: function(response) {
-            //                 $("body").html(response);
-            //             },
-            //             error: function(error) {
-            //                 console.log(error);
-            //             }
-            //         });
-            // });
 
         </script>
         <script src="{{ url_for('static',filename='js/plugins.js') }}"></script>
