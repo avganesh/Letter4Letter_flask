@@ -52,7 +52,7 @@
                 <input id="rightbutton" type="button" value="Right" class="btn btn-primary">
             </form>
             <br>
-            <br><p style="font-size:50px"> <span id="theword"> {{theword}} </span> </p>
+            <br><p style="font-size:50px"> <span id="thewordid"> {{theword}} </span> </p>
             <br>
             <br> 
             <br> Last move: <span id="lastmove">{{lastmove}}</span>
@@ -75,7 +75,7 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
             
             var theletter = document.getElementById("theletter");
-            var theword = document.getElementById("theword").innerHTML;
+            var theword = document.getElementById("thewordid").innerHTML;
 
             function addleft(){
                 if(theletter.value.length > 1 || theletter.value < 'a' || theletter.value > 'z' || "{{yourname}}" == document.getElementById("lastmove").innerHTML){
@@ -98,7 +98,7 @@
             	//alert("got here")
                 $.ajax({
                     url: '/playmove',
-                    data: JSON.stringify({'playerData':"{{yourname}}", 'moveData':x, 'letterData': theletter.value, 'wordData':"{{theword}}", 'gameData':document.getElementById("gameid").innerHTML}),
+                    data: JSON.stringify({'playerData':"{{yourname}}", 'moveData':x, 'letterData': theletter.value, 'wordData':document.getElementById("thewordid").innerHTML, 'gameData':document.getElementById("gameid").innerHTML}),
                     type: 'POST',
                     contentType: 'application/json;charset=UTF-8',
                     processData: false, 
@@ -107,7 +107,7 @@
                         //$("body").html(response);
                         $(roundnum).html(JSONObject[0]);
                         $(message).html(JSONObject[1]);
-                        $(theword).html(JSONObject[2]);
+                        $(thewordid).html(JSONObject[2]);
                         $(lastmove).html(JSONObject[3]);
                         $(gameoverwords).html(JSONObject[4]);
                         $(P1_score).html(JSONObject[5]);
@@ -175,7 +175,7 @@
                             //$("body").html(response);
                             $(roundnum).html(JSONObject[0]);
                             $(message).html(JSONObject[1]);
-                            $(theword).html(JSONObject[2]);
+                            $(thewordid).html(JSONObject[2]);
                             $(lastmove).html(JSONObject[3]);
                             $(gameoverwords).html(JSONObject[4]);
                             $(P1_score).html(JSONObject[5]);

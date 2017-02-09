@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_heroku import Heroku
 import uuid
 import json
+import datetime
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/pre-registration'
@@ -75,9 +76,14 @@ def splash():
 @app.route('/newgame', methods=['GET', 'POST'])
 def newgame():
     if request.method == 'POST':
+        email = request.json['email']
         response = str(uuid.uuid4())
         reg = l4l_games(response)
         db.session.add(reg)
+        db.session.commit()
+        game = db.session.query(l4l_games).filter_by(gameid=response).first()
+        game.email = email
+        game.timestamp = datetime.datetime.now()
         db.session.commit()
     return response
 

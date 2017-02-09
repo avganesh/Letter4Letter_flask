@@ -22,6 +22,7 @@
         
             <form class="col-lg-12" method="POST">
                 <p>Create a New Game </p>
+                <input placeholder="Enter your email address" id="email">
                 <span><button class="btn btn-lg btn-success" type="button" id="CreateNew">Create</button></span>
             </form>
         
@@ -58,7 +59,7 @@
             document.getElementById("CreateNew").addEventListener('click', function(){
                     $.ajax({
                         url: '/newgame',
-                        data: JSON.stringify({'test': "test"}),
+                        data: JSON.stringify({'email': document.getElementById("email").value}),
                         type: 'POST',
                         contentType: 'application/json;charset=UTF-8',
                         processData: false, 
