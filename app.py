@@ -96,6 +96,8 @@ def joingame():
             print("welcome back")
         elif game.P2name == name:
             print("welcome back")
+        else
+            return render_template('splash.html')
         db.session.commit()
         game = l4l_games.query.filter_by(gameid=gameid).first()
     return render_template('playonline.html', Player1=game.P1name, Player2=game.P2name, gameid=game.gameid,  theword=game.wordgamestate, P1score=game.P1score, P2score=game.P2score, lastmove=game.lastmove, roundnum=len(game.wordgamestate), yourname=name, message=message, gameoverwords=game.gameoverwords)
